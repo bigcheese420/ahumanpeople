@@ -1,33 +1,92 @@
-var clicks = 0;
-var cursors = 0;
-var cursorCost = Math.floor(15 * Math.pow(1.25, cursors)); // generates cost of cursor
+var coins = 0; // COINSSSSS5SSSS!1!!!!!!!!
 
-function clickHere(num)
+var cropName = ["rice", "wheat", "soybean", "sesame", "millet"];
+var cropAmountCurrent = [0, 0, 0, 0, 0];
+var cropAmountSold = [0, 0, 0, 0, 0];
+var peasantsPerCrop = [0, 0, 0, 0, 0];
+
+var numPeasants = 0;
+var peasantCost = Math.floor(5 * Math.pow(1.1, numPeasants)); // generates cost of peasant
+
+var clickSections = ["stapleCrops", "cashCrops", "fishing", "landAnimals", "peasantry", "market", "upgrades"]
+var clickTheNODE = document.querySelectorAll("div.actuallyButtons");
+var sectionsUnlocked = [0, 0, 0, 0, 0, 0, 0];
+
+function foodClickHere(i, num) // yes eficshenty
 {
-    clicks += num; // adds clicks and display them
-    document.getElementById("clicks").innerHTML = clicks;
+    cropAmountCurrent[i] += num;
+    document.getElementById(cropName[i]).innerHTML = cropAmountCurrent[i];
 }
 
-function buyCursor()
+function foodSellHere(num, i, price) // to sell shit
 {
-    if (clicks >= cursorCost) // checks if play can afford new cursor
+    if (num <= cropAmountCurrent[i])
     {
-        cursors++; // adds a new cursor
-        clicks -= cursorCost; // removes clicks spent
-        document.getElementById("cursors").innerHTML = cursors; // update cursor amount
-        document.getElementById("clicks").innerHTML = clicks; // update click amount
+        coins += (price);
+        cropAmountCurrent[i] -= num;
     }
-    cursorCost = Math.floor(15 * Math.pow(1.25, cursors)); // generates cost of cursor
-    document.getElementById("cursorCost").innerHTML = cursorCost; // uploads cursor cost to html
 }
 
-window.setInterval(function() // game loop: 1000 = 1 sec
+
+
+function hirePeasant()
 {
-    clickHere(cursors); // makes cursors click for you
+    if (coins >= peasantCost) // checks if u can afoord or not
+    {
+        numPeasants++; // adds a new peasnt
+        coins -= peasantCost; // spends that amount of cions
+        document.getElementById("numPeasants").innerHTML = numPeasants; // updates numbers
+        document.getElementById("coins").innerHTML = coins;
+    }
+    peasantCost = Math.floor(5 * Math.pow(1.1, numPeasants)); // generates cost of peasant
+    document.getElementById("peasantCost").innerHTML = peasantCost; // updates
+}
+
+var dropdownThang = document.getElementsByClassName("dropdownThang"); // lets go, drop dat DOWN
+for (let i = 0; i < dropdownThang.length; i++) 
+{
+  dropdownThang[i].addEventListener("click", function()
+  {
+    this.classList.toggle("active");
+    var dropdownContent = this.nextElementSibling;
+    if (dropdownContent.style.display === "none")
+    {
+        dropdownContent.style.display = "block";
+    } 
+    else 
+    {
+        dropdownContent.style.display = "none";
+    }
+  });
+}
+
+console.log(clickTheNODE);
+unlockNewClickSections(0, 0);
+unlockNewClickSections(4, 0);
+unlockNewClickSections(5, 0);
+function unlockNewClickSections(secIndex, subSecIndex)
+{
+    clickTheNODE[secIndex].children[subSecIndex].style.display = "block";
+}
+
+window.setInterval
+(function() // game loop: 1000 = 1 sec
+{
+    document.getElementById("coins").innerHTML = coins;
+    document.getElementById(cropName[0]).innerHTML = cropAmountCurrent[0];
+    document.getElementById(cropName[1]).innerHTML = cropAmountCurrent[1];
+    document.getElementById(cropName[2]).innerHTML = cropAmountCurrent[2];
+    document.getElementById(cropName[3]).innerHTML = cropAmountCurrent[3];
+    document.getElementById(cropName[4]).innerHTML = cropAmountCurrent[4];
+    document.getElementById("numPeasants").innerHTML = numPeasants;
+    document.getElementById("peasantCost").innerHTML = peasantCost;
+    /*
+    riceHere(cursors); // makes cursors click for you
     cursorCost = Math.floor(15 * Math.pow(1.25, cursors)); // generates cost of cursor
     document.getElementById("cursorCost").innerHTML = cursorCost; // uploads cursor cost to html
     document.getElementById("cursors").innerHTML = cursors; // update cursor amount
-}, 500);
+    */
+}, 50);
 
 /*
 THE CODE SHIT HERE BELOW IS IN JQUERY SO WATCH TF OUT WHEN EDITING FOO!!!!!1!1!!!!!1!
@@ -38,21 +97,25 @@ if(localStorage !== "undefined") // checks if browser supports this or nahh
     $(document).ready(function() { // checks the html doc
 		$("#theSaveFeatureBeLike").click(function() { // click save button, saves data to local storage
 			// Get input names
-            let tempclicks = $("#clicks").val();
-            let tempcursors = $("#cursors").val();
-            let tempcursorCost = $("#cursorCost").val();
+            let tempCoins = $("#coins").val();
+            let tempRice = $("#" + cropName[0]).val();
+            let tempWheat = $("#" + cropName[1]).val();
+            let tempSoybean = $("#" + cropName[2]).val();
+            let temSesame = $("#" + cropName[3]).val();
+            let tempMillet = $("#" + cropName[4]).val();
 			
 			// Store data
-            localStorage.setItem("clicksSaved", tempclicks);
-            localStorage.setItem("cursorsSaved", tempcursors);
-            localStorage.setItem("cursorCostSaved", tempcursorCost);
+            localStorage.setItem("riceSaved", tempRice);
             alert("Your progress has been saved.");
         });
 		$("#recoverYourProgressDio").click(function() { // click recover button, gets data from local storage
             // Retrieve data
-            $("#clicks").val() = localStorage.getItem("clicksSaved");
-            $("#cursors").val() = localStorage.getItem("cursorsSaved");
-            $("#cursorCost").val() = localStorage.getItem("cursorCostSaved");
+            $("#coins").val() = localStorage.getItem("coinsSaved");
+            $("#" + cropName[0]).val() = localStorage.getItem("riceSaved");
+            $("#" + cropName[1]).val() = localStorage.getItem("wheatSaved");
+            $("#" + cropName[2]).val() = localStorage.getItem("soybeanSaved");
+            $("#" + cropName[3]).val() = localStorage.getItem("sesameSaved");
+            $("#" + cropName[4]).val() = localStorage.getItem("milletSaved");
 		});
 	});
 }

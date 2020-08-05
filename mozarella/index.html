@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie-edge">
     <title>tittle ahaha</title>
     <link rel="stylesheet" href="style.css">
@@ -12,14 +12,66 @@
 </head>
 <body>
 
-    <p>Clicks: <span id="clicks"></span></p>
-    <p>Cursors: <span id="cursors"></span></p>
+    <div id="topChungus"> <!-- the big boi stats for planning stonks, plus extra tidbits -->
 
-    <div class="container">
-        <div class="buttons" onclick="clickHere(1)">CLICK FOR CLICK</div>
-        <div class="buttons" onclick="buyCursor()">BUY CURSOR FOR <span id="cursorCost"></span> CLICKS</div>
-        <div class="buttons" id="theSaveFeatureBeLike">click me to <b>SAVE 15% ON CAR INSURANCE</b></div>
-        <div class="buttons" id="recoverYourProgressDio">click me to <i>R&Eacute;COVER</i> your progress</div>
+        <p>Coins: <span id="coins"></span></p>
+        <!-- staple crops II
+        <p>Azuki Bean: </p>
+        <p>Dates: </p>
+        <p>Peaches: </p>
+        <p>Barley: </p>
+        <p>Taro: </p>
+        -->
+        <p>Peasants: <span id="numPeasants"></span></p>
+
+        <div id="theSaveFeatureBeLike">click me to <b>SAVE 15% ON CAR INSURANCE</b></div>
+        <div id="recoverYourProgressDio">click me to <i>R&Eacute;COVER</i> your progress</div>
+
+    </div>
+
+    <div id="leftChungus"> <!-- production part for creating the stuff for stonks -->
+
+        <h1>MAKE LES REPAS HERE</h1>
+
+        <div class="dropdownThang superBoton">Staple Crops pa comer</div>
+        <div class="container actuallyButtons">
+            <div><span onclick="foodClickHere(0, 1)">click for RICE</span>: <span id="rice"></span> rice</div>
+            <div><span onclick="foodClickHere(1, 1)">click for WHEAT</span>: <span id="wheat"></span> wheat</div>
+            <div><span onclick="foodClickHere(2, 1)">click for SOYBEAN</span>: <span id="soybean"></span> soybean</div>
+            <div><span onclick="foodClickHere(3, 1)">click for SESAME</span>: <span id="sesame"></span> sesame</div>
+            <div><span onclick="foodClickHere(4, 1)">click for MILLET</span>: <span id="millet"></span> millet</div>
+        </div>
+
+        <div class="dropdownThang superBoton">Ca$h Crops</div>
+        <div class="container actuallyButtons"></div>
+
+        <div class="dropdownThang superBoton">Phishing irl</div>
+        <div class="container actuallyButtons"></div>
+
+        <div class="dropdownThang superBoton">Les Animaux Pour Manger</div>
+        <div class="container actuallyButtons"></div>
+
+        <div class="dropdownThang superBoton">The PEEsantry (ahaha)</div>
+        <div class="container actuallyButtons">
+            <div onclick="hirePeasant()">HIRE! A PEASANT FOR <span id="peasantCost"></span> COINS</div>
+        </div>
+
+    </div>
+
+    <div id="rightChungus"> <!-- the shop and the upgrade station for making them big boi stonks -->
+
+        <h1>STONKS MARKET</h1>
+
+        <div class="dropdownThang superBoton">BUY BUY BUY BUY</div>
+        <div class="container actuallyButtons">
+            <div>buying <span onclick="foodSellHere(5, 0, 1)">5 RICE for 1</span> coins</div>
+        </div>
+
+        <div class="dropdownThang superBoton">get gooder.</div>
+        <div class="container actuallyButtons">
+            <div>get <span>sesame seed</span> for <span>##</span> coins</div>
+        </div>
+
     </div>
     
 </body>

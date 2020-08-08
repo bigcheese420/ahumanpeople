@@ -6,10 +6,11 @@ var cropAmountSold = [0, 0, 0, 0, 0];
 var peasantsPerCrop = [0, 0, 0, 0, 0];
 
 var numPeasants = 0;
+var numUnemployed = 0;
 var peasantCost = Math.floor(5 * Math.pow(1.1, numPeasants)); // generates cost of peasant
 
 var clickSections = ["stapleCrops", "cashCrops", "fishing", "landAnimals", "peasantry", "market", "upgrades"]
-var clickTheNODE = document.querySelectorAll("div.actuallyButtons");
+var clickNODE = document.querySelectorAll("div.actuallyButtons");
 var sectionsUnlocked = [0, 0, 0, 0, 0, 0, 0];
 
 function foodClickHere(i, num) // yes eficshenty
@@ -27,8 +28,6 @@ function foodSellHere(num, i, price) // to sell shit
     }
 }
 
-
-
 function hirePeasant()
 {
     if (coins >= peasantCost) // checks if u can afoord or not
@@ -40,6 +39,29 @@ function hirePeasant()
     }
     peasantCost = Math.floor(5 * Math.pow(1.1, numPeasants)); // generates cost of peasant
     document.getElementById("peasantCost").innerHTML = peasantCost; // updates
+}
+
+function managePeasantsHere(secIndex, subSecIndex, action, amount)
+{
+    if (secIndex <= 1)
+    {
+        if (action == "add")
+        {
+            if (numUnemployed >= amount)
+            {
+                numUnemployed -= amount;
+                peasantsPerCrop[subSecIndex] += amount;
+            }
+        }
+        else if (action == "subtract")
+        {
+            if (peasantsPerCrop[subSecIndex] >= amount)
+            {
+                numEmployed += amount;
+                peasantsPerCrop[subSecIndex] -= amount;
+            }
+        }
+    }
 }
 
 var dropdownThang = document.getElementsByClassName("dropdownThang"); // lets go, drop dat DOWN
@@ -60,13 +82,24 @@ for (let i = 0; i < dropdownThang.length; i++)
   });
 }
 
-console.log(clickTheNODE);
-unlockNewClickSections(0, 0);
-unlockNewClickSections(4, 0);
-unlockNewClickSections(5, 0);
-function unlockNewClickSections(secIndex, subSecIndex)
+console.log(clickNODE);
+
+generateSubSections(0, 0);
+generateSubSections(0, 1);
+generateSubSections(0, 2);
+generateSubSections(0, 3);
+generateSubSections(0, 4);
+
+function generateSubSections(secIndex, subSecIndex)
 {
-    clickTheNODE[secIndex].children[subSecIndex].style.display = "block";
+    if (secIndex == 0)
+    {
+        let cheesySandwiches = document.createElement("div");
+        let cheddar = '<span onclick="foodClickHere(' + subSecIndex + ', 1)">click for ' + cropName[subSecIndex] + '</span>: <span id=' + cropName[subSecIndex] + '></span> ' + cropName[subSecIndex];
+        let parmesan = '<br>&uarr; &amp; &darr;';
+        cheesySandwiches.innerHTML = cheddar + parmesan;
+        clickNODE[secIndex].appendChild(cheesySandwiches);
+    }
 }
 
 window.setInterval
